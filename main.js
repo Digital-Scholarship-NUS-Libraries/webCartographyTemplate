@@ -4,15 +4,15 @@ import "ol/ol.css";
 import { Map, View, Overlay } from "ol";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { OSM as OSMSource, Vector as VectorSource } from "ol/source";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import { Icon, Style, Fill, Stroke } from "ol/style";
+// import Feature from "ol/Feature";
+// import Point from "ol/geom/Point";
+import { Style, Fill, Stroke } from "ol/style";
 import { asArray } from "ol/color";
 import { fromLonLat } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import { csv as csvFetch } from "d3-fetch";
 
-const map = new Map({
+const olMap = new Map({
   target: "map",
   layers: [
     new TileLayer({
@@ -41,7 +41,7 @@ const addParksMarkers = async () => {
       element: overlayElement,
     });
     olOverlay.setPosition(fromLonLat([item.lon, item.lat]));
-    map.addOverlay(olOverlay);
+    olMap.addOverlay(olOverlay);
   });
 };
 
@@ -78,7 +78,9 @@ const addGeoJsonLayer = async () => {
       return style;
     },
   });
-  map.addLayer(vectorLayer);
+  olMap.addLayer(vectorLayer);
 };
 
 addGeoJsonLayer();
+
+console.log(olMap.getLayers())
