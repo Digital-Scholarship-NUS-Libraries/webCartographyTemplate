@@ -7,11 +7,15 @@ import {
   Vector as VectorLayer,
   Image as ImageLayer,
 } from "ol/layer";
-import { OSM as OSMSource, Vector as VectorSource } from "ol/source";
+import {
+  OSM as OSMSource,
+  Vector as VectorSource,
+  TileWMS as TileWMSSource,
+} from "ol/source";
 import { Style, Fill, Stroke } from "ol/style";
 import { asArray } from "ol/color";
 import { fromLonLat } from "ol/proj";
-import GeoJSON from "ol/format/GeoJSON";
+import { GeoJSON, WMSCapabilities } from "ol/format";
 import { defaults as interactionDefaults } from "ol/interaction/defaults";
 import { csv as csvFetch } from "d3-fetch";
 
@@ -127,18 +131,47 @@ const addGeoJsonLayer = (sourceGeoJSON) => {
   olMap.addLayer(vectorLayer);
 };
 
+const parser = new WMSCapabilities();
+
+const addWMSLayer = async (sourceUrl) => {
+  const response = await fetch(
+    sourceUrl + "?request=GetCapabilities&service=WMS"
+  );
+  const responseText = await response.text();
+  const capabilities = parser.read(responseText);
+  const layersString = capabilities.Capability.Layer.Layer.reduce(
+    (prev, curr) => {
+      return prev + "," + curr.Name;
+    },
+    ""
+  );
+  const wmsTileLayer = new TileLayer({
+    source: new TileWMSSource({
+      url: sourceUrl,
+      params: { LAYERS: layersString.substring(1) },
+    }),
+  });
+  olMap.addLayer(wmsTileLayer);
+};
+
 const intersectionObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      flyTo(
-        fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
-        function () {},
-        olMap.getView()
-      );
+      if (entry.target.dataset.chapterlocation) {
+        flyTo(
+          fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
+          function () {},
+          olMap.getView()
+        );
+      }
       if (entry.target.dataset.markers) {
         addParksMarkers(entry.target.dataset.markers);
-      } else if (entry.target.dataset.geojson) {
+      }
+      if (entry.target.dataset.geojson) {
         addGeoJsonLayer(entry.target.dataset.geojson);
+      }
+      if (entry.target.dataset.addwmslayer) {
+        addWMSLayer(entry.target.dataset.addwmslayer);
       }
     } else {
       if (entry.target.dataset.removeonleave) {
@@ -160,3 +193,5 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll(".mapChapter").forEach((element) => {
   intersectionObserver.observe(element);
 });
+
+window.olmap = olMap;
