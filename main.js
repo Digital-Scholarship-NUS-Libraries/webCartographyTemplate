@@ -1,5 +1,5 @@
-import "./style.css";
 import "ol/ol.css";
+import "./style.css";
 
 import { Map, View, Overlay } from "ol";
 import {
@@ -17,6 +17,7 @@ import { asArray } from "ol/color";
 import { fromLonLat } from "ol/proj";
 import { GeoJSON, WMSCapabilities } from "ol/format";
 import { defaults as interactionDefaults } from "ol/interaction/defaults";
+import Zoom from 'ol/control/Zoom';
 import { csv as csvFetch } from "d3-fetch";
 
 const olMap = new Map({
@@ -31,47 +32,13 @@ const olMap = new Map({
     zoom: 12,
   }),
   interactions: interactionDefaults({ mouseWheelZoom: false }),
+  // controls: [new Zoom({className: "absolute bottom-1 right-1 "})],
 });
-
-const flyTo = (location, done, view) => {
-  const duration = 1000;
-  const zoom = view.getZoom();
-  let parts = 2;
-  let called = false;
-  function callback(complete) {
-    --parts;
-    if (called) {
-      return;
-    }
-    if (parts === 0 || !complete) {
-      called = true;
-      done(complete);
-    }
-  }
-  view.animate(
-    {
-      center: location,
-      duration: duration,
-    },
-    callback
-  );
-  view.animate(
-    {
-      zoom: zoom - 0.2,
-      duration: duration / 2,
-    },
-    {
-      zoom: zoom,
-      duration: duration / 2,
-    },
-    callback
-  );
-};
 
 const addParksMarkers = async (sourceCSV) => {
   const parksList = await csvFetch(sourceCSV);
 
-  const imageLayer = new ImageLayer();
+  // const imageLayer = new ImageLayer();
 
   parksList.map((item) => {
     const overlayElement = document.createElement("img");
@@ -150,6 +117,9 @@ const addWMSLayer = async (sourceUrl) => {
       url: sourceUrl,
       params: { LAYERS: layersString.substring(1) },
     }),
+    properties: {
+      layerID: sourceUrl,
+    },
   });
   olMap.addLayer(wmsTileLayer);
 };
@@ -157,13 +127,6 @@ const addWMSLayer = async (sourceUrl) => {
 const intersectionObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      if (entry.target.dataset.chapterlocation) {
-        flyTo(
-          fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
-          function () {},
-          olMap.getView()
-        );
-      }
       if (entry.target.dataset.markers) {
         addParksMarkers(entry.target.dataset.markers);
       }
@@ -172,6 +135,19 @@ const intersectionObserver = new IntersectionObserver((entries) => {
       }
       if (entry.target.dataset.addwmslayer) {
         addWMSLayer(entry.target.dataset.addwmslayer);
+      }
+      if (entry.target.dataset.chapterlocation) {
+        /* flyTo(
+          fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
+          function () {},
+          olMap.getView()
+        ); */
+        console.log(fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)))
+        olMap.getView().animate({
+          center: fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
+          zoom: entry.target.dataset.zoom,
+          duration: 750
+        });
       }
     } else {
       if (entry.target.dataset.removeonleave) {
