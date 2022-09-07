@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://nus.edu.sg/nuslibraries">
-    <img alt="NUS Libraries" src="public/images/NUSL_logo.png" width="200" />
+    <img alt="NUS Libraries" src="public/images/NUSL_logo.png" width="200" alt="NUS Libraries logo"/>
   </a>
 </p>
 
@@ -23,7 +23,7 @@ Open the template in one of these free online services to start editing right aw
 
 Edit `index.html` to add chapters to the story.
 
-<img src="assets/indexHtml.png"/>
+<img src="assets/indexHtml.png" alt="screenshot of index.html"/>
 
 An html element with the `mapChapter` class will be able to trigger events on the map.
 
@@ -59,7 +59,7 @@ While the marker are overlays, both the geojson data and the wms layer are layer
 
 Edit `parks.csv`, or create a new csv file with a similar shape, to input data for your markers. Don't forget to add the images in the `public/images/` folder!
 
-<img src="assets/parksCSV.png"/>
+<img src="assets/parksCSV.png" alt="screenshot of parks.csv"/>
 
 Create a geojson file on [geojson.io](https://geojson.io) and upload it to `public/data/`
 
