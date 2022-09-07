@@ -6,6 +6,8 @@
 
 # A Short Introduction to Cartography on the Web
 
+*All park's photos (except lover's park) are under copyright and belong to the [National Parks Board of Singapore](https://nparks.gov.sg), which graciously authorized their use for this template. Reuse of these images without authorization is prohibited outside of this template.*
+
 <a href="https://stackblitz.com/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate?file=index.html" aria-label="Open in StackBlitz">
   <img src="assets/openInStackblitz.png" style="height: 32px;"/>
 </a>
