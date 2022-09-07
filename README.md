@@ -8,14 +8,16 @@
 
 *All park's photos (except lover's park) are under copyright and belong to the [National Parks Board of Singapore](https://nparks.gov.sg), which graciously authorized their use for this template. Reuse of these images without authorization is prohibited outside of this template.*
 
+## How to use the template
+
+Open the template in one of these free online services to start editing right away!
+
 <a href="https://stackblitz.com/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate?file=index.html" aria-label="Open in StackBlitz">
   <img src="assets/openInStackblitz.png" style="height: 32px;"/>
 </a>
 <a href="https://codesandbox.io/s/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate" aria-label="Open in CodeSandbox">
   <img src="assets/openInCodesandbox.png" style="height: 32px;"/>
 </a>
-
-## How to use the template
 
 ### Editing the story
 
