@@ -15,7 +15,7 @@
   <img src="assets/openInCodesandbox.png" style="height: 32px;"/>
 </a>
 
-## How to use it
+## How to use the template
 
 ### Editing the story
 
@@ -61,7 +61,7 @@ Edit `parks.csv`, or create a new csv file with a similar shape, to input data f
 
 Create a geojson file on [geojson.io](https://geojson.io) and upload it to `public/data/`
 
-## Using the project locally
+## Using the template locally
 
 You can also adapt this project directly on your laptop! For this you will need to have installed git, node.js and npm.
 
