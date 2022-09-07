@@ -82,3 +82,10 @@ Run Vite in dev mode to quickly see the effect of your changes:
 Build the site, the result will be found in the dist folder and should be ready to be deployed on your hosting:
 
 `npm run build`
+
+## Other interesting tools
+
+* [the original map storytelling template from mapbox](https://github.com/mapbox/storytelling)
+* [kepler gl](https://kepler.gl/) is a powerful tool for large scale GIS data analysis, in 3D.
+* [ArcGIS StoryMaps](https://storymaps.arcgis.com/) is a proprietary no code solution for telling stories with GIS data.
+* [Kinghtlab's storymap](https://storymap.knightlab.com/) is a very popular no code solution for telling stories with maps.
