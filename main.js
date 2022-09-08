@@ -32,13 +32,10 @@ const olMap = new Map({
     zoom: 12,
   }),
   interactions: interactionDefaults({ mouseWheelZoom: false }),
-  // controls: [new Zoom({className: "absolute bottom-1 right-1 "})],
 });
 
 const addParksMarkers = async (sourceCSV) => {
   const parksList = await csvFetch(sourceCSV);
-
-  // const imageLayer = new ImageLayer();
 
   parksList.map((item) => {
     const overlayElement = document.createElement("img");
@@ -137,11 +134,6 @@ const intersectionObserver = new IntersectionObserver((entries) => {
         addWMSLayer(entry.target.dataset.addwmslayer);
       }
       if (entry.target.dataset.chapterlocation) {
-        /* flyTo(
-          fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
-          function () {},
-          olMap.getView()
-        ); */
         console.log(fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)))
         olMap.getView().animate({
           center: fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
@@ -170,4 +162,5 @@ document.querySelectorAll(".mapChapter").forEach((element) => {
   intersectionObserver.observe(element);
 });
 
+// this allows interacting with the map in the browser console for easy debugging and experimenting
 window.olmap = olMap;
