@@ -5,7 +5,6 @@ import { Map, View, Overlay } from "ol";
 import {
   Tile as TileLayer,
   Vector as VectorLayer,
-  Image as ImageLayer,
 } from "ol/layer";
 import {
   OSM as OSMSource,
@@ -17,8 +16,8 @@ import { asArray } from "ol/color";
 import { fromLonLat } from "ol/proj";
 import { GeoJSON, WMSCapabilities } from "ol/format";
 import { defaults as interactionDefaults } from "ol/interaction/defaults";
-import Zoom from 'ol/control/Zoom';
 import { csv as csvFetch } from "d3-fetch";
+import { Point } from "ol/geom";
 
 const olMap = new Map({
   target: "map",
@@ -29,6 +28,7 @@ const olMap = new Map({
   ],
   view: new View({
     center: fromLonLat([103.8, 1.35]),
+    padding: [0, 0, 0, 281],
     zoom: 12,
   }),
   interactions: interactionDefaults({ mouseWheelZoom: false }),
@@ -64,7 +64,7 @@ const addGeoJsonLayer = (sourceGeoJSON) => {
       url: sourceGeoJSON,
       format: new GeoJSON(),
     }),
-    style: function (feature) {
+    style: function(feature) {
       const style = new Style({
         fill: new Fill({
           color: "#eeeeee",
@@ -121,42 +121,47 @@ const addWMSLayer = async (sourceUrl) => {
   olMap.addLayer(wmsTileLayer);
 };
 
-const intersectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      if (entry.target.dataset.markers) {
-        addParksMarkers(entry.target.dataset.markers);
+const intersectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (entry.target.dataset.markers) {
+          addParksMarkers(entry.target.dataset.markers);
+        }
+        if (entry.target.dataset.geojson) {
+          addGeoJsonLayer(entry.target.dataset.geojson);
+        }
+        if (entry.target.dataset.addwmslayer) {
+          addWMSLayer(entry.target.dataset.addwmslayer);
+        }
+        if (entry.target.dataset.chapterlocation) {
+          const point = new Point(JSON.parse(entry.target.dataset.chapterlocation));
+          olMap.getView().animate({
+            center: fromLonLat(
+              JSON.parse(entry.target.dataset.chapterlocation)
+            ),
+            zoom: entry.target.dataset.zoom,
+            duration: 750,
+          });
+        }
+      } else {
+        if (entry.target.dataset.removeonleave) {
+          const layers = olMap.getLayers().getArray();
+          const layersToRemove = layers.filter((item) => {
+            return item.get("layerID") == entry.target.dataset.removeonleave;
+          });
+          layersToRemove.map((layer) => {
+            olMap.removeLayer(layer);
+          });
+        }
+        if (entry.target.dataset.removeoverlays) {
+          removeOverlays();
+        }
       }
-      if (entry.target.dataset.geojson) {
-        addGeoJsonLayer(entry.target.dataset.geojson);
-      }
-      if (entry.target.dataset.addwmslayer) {
-        addWMSLayer(entry.target.dataset.addwmslayer);
-      }
-      if (entry.target.dataset.chapterlocation) {
-        console.log(fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)))
-        olMap.getView().animate({
-          center: fromLonLat(JSON.parse(entry.target.dataset.chapterlocation)),
-          zoom: entry.target.dataset.zoom,
-          duration: 750
-        });
-      }
-    } else {
-      if (entry.target.dataset.removeonleave) {
-        const layers = olMap.getLayers().getArray();
-        const layersToRemove = layers.filter((item) => {
-          return item.get("layerID") == entry.target.dataset.removeonleave;
-        });
-        layersToRemove.map((layer) => {
-          olMap.removeLayer(layer);
-        });
-      }
-      if (entry.target.dataset.removeoverlays) {
-        removeOverlays();
-      }
-    }
-  });
-});
+    });
+  },
+  { threshold: 0.5 }
+);
 
 document.querySelectorAll(".mapChapter").forEach((element) => {
   intersectionObserver.observe(element);
