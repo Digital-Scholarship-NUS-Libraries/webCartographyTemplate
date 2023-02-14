@@ -1,5 +1,11 @@
 import { defineConfig } from "vite"
 
 export default defineConfig({
-  base: './'
+  base: './',
+  build: {
+    outDir: "build"
+  },
+  server: {
+    port: 3000
+  }
 })
