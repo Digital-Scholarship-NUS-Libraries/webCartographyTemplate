@@ -12,11 +12,14 @@
 
 Open the template in one of these free online services to start editing right away!
 
+<a href="https://glitch.com/edit/#!/remix/futuristic-shelled-utahceratops" aria-label="Remix on Glitch">
+  <img src="assets/remix-button-v2.svg" alt="Remix on Glitch" style="height: 32px;" />
+</a>
 <a href="https://stackblitz.com/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate?file=index.html" aria-label="Open in StackBlitz">
-  <img src="assets/openInStackblitz.png" style="height: 32px;"/>
+  <img src="assets/openInStackblitz.png" alt="Open in StackBlitz" style="height: 32px;"/>
 </a>
 <a href="https://codesandbox.io/s/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate" aria-label="Open in CodeSandbox">
-  <img src="assets/openInCodesandbox.png" style="height: 32px;"/>
+  <img src="assets/openInCodesandbox.png" alt="Open in CodeSandbox" style="height: 32px;"/>
 </a>
 
 ### Editing the story
