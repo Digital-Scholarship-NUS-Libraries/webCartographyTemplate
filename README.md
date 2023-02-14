@@ -82,7 +82,7 @@ Run Vite in dev mode to quickly see the effect of your changes:
 
 `npm run dev`
 
-Build the site, the result will be found in the dist folder and should be ready to be deployed on your hosting:
+Build the site, the result will be found in the build folder and should be ready to be deployed on your hosting:
 
 `npm run build`
 
