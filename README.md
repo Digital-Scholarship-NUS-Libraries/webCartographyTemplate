@@ -12,7 +12,7 @@
 
 Open the template in one of these free online services to start editing right away!
 
-<a href="https://glitch.com/edit/#!/remix/futuristic-shelled-utahceratops" aria-label="Remix on Glitch">
+<a href="https://glitch.com/edit/#!/import/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate" aria-label="Remix on Glitch">
   <img src="assets/remix-button-v2.svg" alt="Remix on Glitch" style="height: 32px;" />
 </a>
 <a href="https://stackblitz.com/github/Digital-Scholarship-NUS-Libraries/webCartographyTemplate?file=index.html" aria-label="Open in StackBlitz">
