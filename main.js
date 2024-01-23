@@ -2,19 +2,18 @@ import "ol/ol.css";
 import "./style.css";
 
 import { Map, View, Overlay } from "ol";
-import {
-  Tile as TileLayer,
-  Vector as VectorLayer,
-} from "ol/layer";
+import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import {
   OSM as OSMSource,
   Vector as VectorSource,
   TileWMS as TileWMSSource,
+  WMTS as WMTSSource,
 } from "ol/source";
+import { optionsFromCapabilities as WMTSOptionsFromCapabilities } from "ol/source/WMTS";
 import { Style, Fill, Stroke } from "ol/style";
 import { asArray } from "ol/color";
 import { fromLonLat } from "ol/proj";
-import { GeoJSON, WMSCapabilities } from "ol/format";
+import { GeoJSON, WMSCapabilities, WMTSCapabilities } from "ol/format";
 import { defaults as interactionDefaults } from "ol/interaction/defaults";
 import { csv as csvFetch } from "d3-fetch";
 import { Point } from "ol/geom";
@@ -42,7 +41,7 @@ const addParksMarkers = async (sourceCSV) => {
     overlayElement.setAttribute("src", item.iconUrl);
     overlayElement.setAttribute(
       "class",
-      "rounded-full transition-all border-4 border-emerald-500 hover:border-8 hover:border-emerald-100"
+      "rounded-full transition-all border-4 border-emerald-500 hover:border-8 hover:border-emerald-100",
     );
     const olOverlay = new Overlay({
       stopEvent: false,
@@ -64,7 +63,7 @@ const addGeoJsonLayer = (sourceGeoJSON) => {
       url: sourceGeoJSON,
       format: new GeoJSON(),
     }),
-    style: function(feature) {
+    style: function (feature) {
       const style = new Style({
         fill: new Fill({
           color: "#eeeeee",
@@ -95,19 +94,19 @@ const addGeoJsonLayer = (sourceGeoJSON) => {
   olMap.addLayer(vectorLayer);
 };
 
-const parser = new WMSCapabilities();
+const wmsParser = new WMSCapabilities();
 
 const addWMSLayer = async (sourceUrl) => {
   const response = await fetch(
-    sourceUrl + "?request=GetCapabilities&service=WMS"
+    sourceUrl + "?request=GetCapabilities&service=WMS",
   );
   const responseText = await response.text();
-  const capabilities = parser.read(responseText);
+  const capabilities = wmsParser.read(responseText);
   const layersString = capabilities.Capability.Layer.Layer.reduce(
     (prev, curr) => {
       return prev + "," + curr.Name;
     },
-    ""
+    "",
   );
   const wmsTileLayer = new TileLayer({
     source: new TileWMSSource({
@@ -119,6 +118,22 @@ const addWMSLayer = async (sourceUrl) => {
     },
   });
   olMap.addLayer(wmsTileLayer);
+};
+
+const addLibmapsLayer = async (sourceUrl) => {
+  const response = await fetch(sourceUrl);
+  const responseText = await response.text();
+  const wmtsParser = new WMTSCapabilities();
+  const capabilities = wmtsParser.read(responseText);
+  const options = WMTSOptionsFromCapabilities(capabilities, {
+    layer: "cogeo",
+    matrixSet: "WebMercatorQuad",
+  });
+  const libmapsLayer = new TileLayer({
+    source: new WMTSSource(options),
+    properties: { layerID: sourceUrl },
+  });
+  olMap.addLayer(libmapsLayer);
 };
 
 const intersectionObserver = new IntersectionObserver(
@@ -134,11 +149,16 @@ const intersectionObserver = new IntersectionObserver(
         if (entry.target.dataset.addwmslayer) {
           addWMSLayer(entry.target.dataset.addwmslayer);
         }
+        if (entry.target.dataset.addlibmapslayer) {
+          addLibmapsLayer(entry.target.dataset.addlibmapslayer);
+        }
         if (entry.target.dataset.chapterlocation) {
-          const point = new Point(JSON.parse(entry.target.dataset.chapterlocation));
+          const point = new Point(
+            JSON.parse(entry.target.dataset.chapterlocation),
+          );
           olMap.getView().animate({
             center: fromLonLat(
-              JSON.parse(entry.target.dataset.chapterlocation)
+              JSON.parse(entry.target.dataset.chapterlocation),
             ),
             zoom: entry.target.dataset.zoom,
             duration: 750,
@@ -160,7 +180,7 @@ const intersectionObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.5 }
+  { threshold: 0.5 },
 );
 
 document.querySelectorAll(".mapChapter").forEach((element) => {
