@@ -6,7 +6,7 @@
 
 # A Short Introduction to Cartography on the Web
 
-*All park's photos (except lover's park) are under copyright and belong to the [National Parks Board of Singapore](https://nparks.gov.sg), which graciously authorized their use for this template. Reuse of these images without authorization is prohibited outside of this template.*
+_All park's photos (except lover's park) are under copyright and belong to the [National Parks Board of Singapore](https://nparks.gov.sg), which graciously authorized their use for this template. Reuse of these images without authorization is prohibited outside of this template._
 
 ## How to use the template
 
@@ -50,9 +50,13 @@ Markers can be removed from the map when a chapter leaves the screen by adding `
 
 `data-geojson` will add shapes defined in a geojson file on the map. Similarly to the csv file, this should be placed in `public/data/` and the value should be a path like `./data/mygeojsonfile.geojson`.
 
+#### Adding a layer from libmaps
+
+To add a layer from [libmaps](https://libmaps.nus.edu.sg) use `data-addlibmapslayer` and enter the webservice url (such as https://libmaps.nus.edu.sg/services/1860/wmts). This url can be found on the libmaps website, on the metadata page of each map. But simply changing the year in the given url will work in most cases!
+
 #### Adding a WMS layer
 
-To add a layer from [libmaps](https://libmaps.nus.edu.sg) use `data-addwmslayer` and enter the webservice url (such as https://libmaps.nus.edu.sg/gis/services/Sing_Hist_Maps/1860/MapServer/WMSServer). This url can be found on the libmaps website, under the hamburger menu for each map. But simply changing the year in the given url will work in most cases!
+To add a layer from a WMS endpoint use `data-addwmslayer` and enter the webservice url.
 
 #### Removing layers
 
@@ -88,7 +92,7 @@ Build the site, the result will be found in the build folder and should be ready
 
 ## Other interesting tools
 
-* [the original map storytelling template from mapbox](https://github.com/mapbox/storytelling)
-* [kepler gl](https://kepler.gl/) is a powerful tool for large scale GIS data analysis, in 3D.
-* [ArcGIS StoryMaps](https://storymaps.arcgis.com/) is a proprietary no code solution for telling stories with GIS data.
-* [Kinghtlab's storymap](https://storymap.knightlab.com/) is a very popular no code solution for telling stories with maps.
+- [the original map storytelling template from mapbox](https://github.com/mapbox/storytelling)
+- [kepler gl](https://kepler.gl/) is a powerful tool for large scale GIS data analysis, in 3D.
+- [ArcGIS StoryMaps](https://storymaps.arcgis.com/) is a proprietary no code solution for telling stories with GIS data.
+- [Kinghtlab's storymap](https://storymap.knightlab.com/) is a very popular no code solution for telling stories with maps.
