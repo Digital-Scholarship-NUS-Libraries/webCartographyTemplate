@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1
   ol:
-    specifier: ^8.2.0
-    version: 8.2.0
+    specifier: ^9.0.0
+    version: 9.2.4
 
 devDependencies:
   '@tailwindcss/typography':
@@ -938,8 +938,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /ol@8.2.0:
-    resolution: {integrity: sha512-/m1ddd7Jsp4Kbg+l7+ozR5aKHAZNQOBAoNZ5pM9Jvh4Etkf0WGkXr9qXd7PnhmwiC1Hnc2Toz9XjCzBBvexfXw==}
+  /ol@9.2.4:
+    resolution: {integrity: sha512-bsbu4ObaAlbELMIZWnYEvX4Z9jO+OyCBshtODhDKmqYTPEfnKOX3RieCr97tpJkqWTZvyV4tS9UQDvHoCdxS+A==}
     dependencies:
       color-rgba: 3.0.0
       color-space: 2.0.1
