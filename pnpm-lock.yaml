@@ -7,7 +7,7 @@ settings:
 dependencies:
   d3-fetch:
     specifier: ^3.0.1
-    version: 3.0.1
+    version: 3.0.2
   ol:
     specifier: ^9.0.0
     version: 9.2.4
@@ -630,8 +630,8 @@ packages:
     hasBin: true
     dev: true
 
-  /d3-dsv@3.0.1:
-    resolution: {integrity: sha512-UG6OvdI5afDIFP9w4G0mNq50dSOsXHJaRE8arAS5o9ApWnIElp8GZw1Dun8vP8OyHOZ/QJUKUJwxiiCCnUwm+Q==}
+  /d3-dsv@3.0.2:
+    resolution: {integrity: sha512-FUnXhX7I4/AXyRCZzwfZTDGSq8PGZ4oR0tiCBqNGOZMsDrQ+6sIWNQnBzcCGhzJKZ6uCvCezTwflUqI209RRiQ==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
@@ -640,11 +640,11 @@ packages:
       rw: 1.3.3
     dev: false
 
-  /d3-fetch@3.0.1:
-    resolution: {integrity: sha512-kpkQIM20n3oLVBKGg6oHrUchHM3xODkTzjMoj7aWQFq5QEM+R6E4WkzT5+tojDY7yjez8KgCBRoj4aEr99Fdqw==}
+  /d3-fetch@3.0.2:
+    resolution: {integrity: sha512-1wGF62bgjMRbF6mqbD+6rRWBL2hwWVYQjFO2UP3Wm1nIAvJZKaQxXM5caVY7athoCa8wIq9lCf7g44lPWFk50g==}
     engines: {node: '>=12'}
     dependencies:
-      d3-dsv: 3.0.1
+      d3-dsv: 3.0.2
     dev: false
 
   /didyoumean@1.2.2:
